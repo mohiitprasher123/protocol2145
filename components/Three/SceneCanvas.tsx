@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
 import { Mesh } from 'three';
-import Helix from './Helix/helix.js'; // ✅ Your new 3D helix!
+import Helix from './Helix/helix.js'; // ✅ Helix animation
 
 function RotatingCube() {
   const ref = useRef<Mesh>(null);
@@ -26,20 +26,21 @@ function RotatingCube() {
 
 export default function SceneCanvas() {
   return (
-    <div style={{
-      width: '100vw',
-      height: '100vh',
-      background: 'radial-gradient(circle at top left, #0f0c29, #302b63, #24243e)',
-    }}>
-      <Canvas camera={{ position: [5, 5, 5] }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[10, 10, 5]} intensity={1} />
-        <Suspense fallback={null}>
-          <OrbitControls />
-          <RotatingCube />
-          <Helix />
-        </Suspense>
-      </Canvas>
-    </div>
+    <Canvas
+      camera={{ position: [5, 5, 5] }}
+      style={{
+        width: '100vw',
+        height: '100vh',
+        background: 'radial-gradient(circle at top left, #0f0c29, #302b63, #24243e)',
+      }}
+    >
+      <ambientLight intensity={0.5} />
+      <directionalLight position={[10, 10, 5]} intensity={1} />
+      <Suspense fallback={null}>
+        <OrbitControls />
+        <RotatingCube />
+        <Helix />
+      </Suspense>
+    </Canvas>
   );
 }
