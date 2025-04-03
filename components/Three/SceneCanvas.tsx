@@ -4,7 +4,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
 import { Mesh } from 'three';
-import Helix from './Helix/helix.js'; // ✅ Helix animation
+import Helix from './Helix/helix.js'; // ✅ Helix 3D animation
 
 function RotatingCube() {
   const ref = useRef<Mesh>(null);
