@@ -1,11 +1,11 @@
 'use client';
 
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useLoader, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
-import { Mesh } from 'three';
-import Helix from './Helix/helix.js'; // ✅ Helix 3D animation
+import { Mesh, TextureLoader, EquirectangularReflectionMapping } from 'three';
 
+// ✅ Rotating Cube
 function RotatingCube() {
   const ref = useRef<Mesh>(null);
 
@@ -18,29 +18,30 @@ function RotatingCube() {
 
   return (
     <mesh ref={ref}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color="#00ffff" wireframe />
+      <boxGeometry args={[12, 2, 21]} />
+      <meshStandardMaterial color="#00ffff" />
     </mesh>
   );
 }
 
+// ✅ Background Loader
+function SceneBackground() {
+  const texture = useLoader(TextureLoader, '/cosmic_background.jpg');
+  texture.mapping = EquirectangularReflectionMapping;
+  return <primitive object={texture} attach="background" />;
+}
+
+// ✅ Canvas with Background + Cube
 export default function SceneCanvas() {
   return (
-    <Canvas
-      camera={{ position: [5, 5, 5] }}
-      style={{
-        width: '100vw',
-        height: '100vh',
-        background: 'radial-gradient(circle at top left, #0f0c29, #302b63, #24243e)',
-      }}
-    >
-      <ambientLight intensity={0.5} />
+    <Canvas style={{ height: '100vh', width: '100vw' }}>
+      <ambientLight intensity={0.6} />
       <directionalLight position={[10, 10, 5]} intensity={1} />
       <Suspense fallback={null}>
-        <OrbitControls />
+        <SceneBackground />
         <RotatingCube />
-        <Helix />
       </Suspense>
+      <OrbitControls />
     </Canvas>
   );
 }
