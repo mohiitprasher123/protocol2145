@@ -1,9 +1,9 @@
 'use client';
 
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { Suspense, useRef } from 'react';
-import { Mesh, TextureLoader, EquirectangularReflectionMapping, SRGBColorSpace } from 'three';
+import { OrbitControls, Points, PointMaterial } from '@react-three/drei';
+import { Suspense, useRef, useMemo } from 'react';
+import { Mesh, TextureLoader, EquirectangularReflectionMapping, SRGBColorSpace, Vector3 } from 'three';
 
 // 🔷 Rotating Cube Component
 function RotatingCube() {
@@ -32,6 +32,27 @@ function SceneBackground() {
   return <primitive object={texture} attach="background" />;
 }
 
+// ✨ Floating Particles Component
+function FloatingParticles() {
+  const particlesCount = 500;
+  const particles = useMemo(() => {
+    const positions = [];
+    for (let i = 0; i < particlesCount; i++) {
+      const x = (Math.random() - 0.5) * 40;
+      const y = (Math.random() - 0.5) * 40;
+      const z = (Math.random() - 0.5) * 40;
+      positions.push(x, y, z);
+    }
+    return new Float32Array(positions);
+  }, []);
+
+  return (
+    <Points positions={particles} stride={3} frustumCulled>
+      <PointMaterial color="white" size={0.05} sizeAttenuation depthWrite={false} />
+    </Points>
+  );
+}
+
 // 🪐 Main Canvas
 export default function SceneCanvas() {
   return (
@@ -51,6 +72,7 @@ export default function SceneCanvas() {
 
       <Suspense fallback={null}>
         <SceneBackground />
+        <FloatingParticles />
         <RotatingCube />
       </Suspense>
 
