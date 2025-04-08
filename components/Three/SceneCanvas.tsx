@@ -1,32 +1,54 @@
 'use client';
 
-import React, { Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { Suspense, useRef } from 'react';
 import ParticlesBackground from './ParticlesBackground';
+import { Mesh } from 'three';
+
+function NeuralSphere() {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame(() => {
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.005;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef}>
+      <sphereGeometry args={[1, 64, 64]} />
+      <meshStandardMaterial
+        color="#111"
+        roughness={0.1}
+        metalness={0.8}
+        emissive="#404040"
+        envMapIntensity={2}
+      />
+    </mesh>
+  );
+}
 
 export default function SceneCanvas() {
   return (
-    <Canvas camera={{ position: [0, 0, 4], fov: 65 }}>
-      <color attach="background" args={['#010409']} />
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[5, 5, 5]} intensity={1.5} />
-
+    <Canvas
+      camera={{ position: [0, 0, 4], fov: 65 }}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'black',
+      }}
+    >
       <Suspense fallback={null}>
+        <ambientLight intensity={0.5} />
+        <directionalLight intensity={1.5} position={[10, 10, 5]} />
+        <NeuralSphere />
         <ParticlesBackground />
-        <Sphere args={[1, 100, 200]} scale={1.5}>
-          <MeshDistortMaterial
-            color="#121212"
-            attach="material"
-            distort={0.4}
-            speed={1.5}
-            roughness={0.1}
-            metalness={0.7}
-          />
-        </Sphere>
+        <OrbitControls enableZoom={false} />
       </Suspense>
-
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
     </Canvas>
   );
 }
