@@ -1,64 +1,89 @@
 'use client';
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Stars, Html } from '@react-three/drei';
+import { OrbitControls, Points, PointMaterial, Html } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
-import { Mesh } from 'three';
+import * as THREE from 'three';
 
-// 🌐 Elegant Central Neural Sphere
+// 🔮 NeuralSphere Component explicitly fixed for TypeScript compatibility
 function NeuralSphere() {
-  const sphereRef = useRef<Mesh>(null);
-  useFrame(() => {
-    if (sphereRef.current) sphereRef.current.rotation.y += 0.002;
+  const pointsRef = useRef<THREE.Points>(null);
+  const sphereGeometry = new THREE.SphereGeometry(1.5, 64, 64);
+
+  useFrame((_state, delta) => {
+    if (pointsRef.current) {
+      pointsRef.current.rotation.y += delta * 0.1;
+    }
   });
 
   return (
-    <mesh ref={sphereRef}>
-      <Sphere args={[1.5, 100, 100]} scale={1.4}>
-        <MeshDistortMaterial
-          color="#74b9ff"
-          distort={0.2}
-          speed={2}
-          roughness={0.2}
-          metalness={0.6}
+    <group>
+      <points ref={pointsRef} geometry={sphereGeometry}>
+        <pointsMaterial
+          color="#00aaff"
+          size={0.015}
+          sizeAttenuation
           transparent
-          opacity={0.95}
+          depthWrite={false}
         />
-      </Sphere>
+      </points>
 
       <Html distanceFactor={10}>
         <div style={{ color: '#ffffff', textAlign: 'center', pointerEvents: 'none' }}>
-          <h2>⚡ Protocol 2145 ⚡</h2>
-          <p>Explore AI–Human Symbiosis</p>
+          <h1 style={{ marginBottom: 0 }}>⚡ Protocol 2145 ⚡</h1>
+          <p style={{ marginTop: 0 }}>Human–AI Symbiosis</p>
         </div>
       </Html>
-    </mesh>
+    </group>
   );
 }
 
-// 🌠 Background
-function Background() {
+// ✨ ParticlesBackground Component explicitly fixed
+function ParticlesBackground() {
+  const particlesRef = useRef<THREE.Points>(null);
+  const particleGeometry = new THREE.BufferGeometry();
+  const count = 4000;
+  const positions = new Float32Array(count * 3);
+
+  for (let i = 0; i < count * 3; i++) {
+    positions[i] = (Math.random() - 0.5) * 50;
+  }
+  particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  useFrame(() => {
+    if (particlesRef.current) {
+      particlesRef.current.rotation.y += 0.0005;
+    }
+  });
+
   return (
-    <Stars radius={50} depth={100} count={3000} factor={4} fade speed={0.5} />
+    <points ref={particlesRef} geometry={particleGeometry}>
+      <pointsMaterial size={0.05} color="#ffffff" transparent opacity={0.5} />
+    </points>
   );
 }
 
-// 🖥️ Main Scene
+// 🎬 Main Canvas explicitly corrected
 export default function SceneCanvas() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 5], fov: 50 }}
-      style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh' }}
+      camera={{ position: [0, 0, 4], fov: 65 }}
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: 'radial-gradient(circle, #0b0f27 0%, #02050d 100%)',
+      }}
     >
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[10, 10, 5]} intensity={1.2} />
-
+      <ambientLight intensity={0.7} />
+      <directionalLight position={[5, 5, 5]} intensity={1.5} />
       <Suspense fallback={null}>
-        <Background />
+        <ParticlesBackground />
         <NeuralSphere />
       </Suspense>
-
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.5} />
+      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} />
     </Canvas>
   );
 }
