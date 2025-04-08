@@ -1,10 +1,10 @@
 'use client';
-
+import React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
 import { Mesh } from 'three';
-import ParticlesBackground from '../../ParticlesBackground';
+import ParticlesBackground from './ParticlesBackground';
 
 // Beautiful Neural Sphere Component
 function NeuralSphere() {
@@ -18,21 +18,18 @@ function NeuralSphere() {
 
   return (
     <mesh ref={meshRef}>
-      <sphereGeometry args={[1.5, 64, 64]} />
-      <meshPhysicalMaterial
-        color="#88e8f2"
-        clearcoat={1}
-        clearcoatRoughness={0}
+      <sphereGeometry args={[1, 128, 128]} />
+      <meshStandardMaterial
+        color="#111"
         roughness={0.1}
-        metalness={0.9}
-        transmission={0.8}
-        thickness={0.5}
+        metalness={0.8}
+        emissive="#404040"
+        envMapIntensity={2}
       />
     </mesh>
   );
 }
 
-// Complete SceneCanvas component
 export default function SceneCanvas() {
   return (
     <Canvas
@@ -43,7 +40,7 @@ export default function SceneCanvas() {
         left: 0,
         width: '100vw',
         height: '100vh',
-        background: 'radial-gradient(circle at center, #1c2541 0%, #0b132b 100%)',
+        background: 'radial-gradient(circle, #0b0f27 0%, #02050d 100%)',
       }}
     >
       <ambientLight intensity={0.7} />
@@ -52,12 +49,7 @@ export default function SceneCanvas() {
         <ParticlesBackground />
         <NeuralSphere />
       </Suspense>
-      <OrbitControls
-        enableZoom={false}
-        autoRotate
-        autoRotateSpeed={0.5}
-        enablePan={false}
-      />
+      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} />
     </Canvas>
   );
 }
