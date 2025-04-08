@@ -1,32 +1,46 @@
 'use client';
 
 import { Canvas, useLoader, useFrame } from '@react-three/fiber';
-import { OrbitControls, Stars, Environment } from '@react-three/drei';
+import { OrbitControls, Stars, Environment, Sphere, MeshDistortMaterial, Html } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
 import {
-  Mesh,
   TextureLoader,
   EquirectangularReflectionMapping,
   SRGBColorSpace,
   Fog,
   Color,
+  Mesh,
 } from 'three';
 
-// 🔷 Rotating Cube Component
-function RotatingCube() {
-  const ref = useRef<Mesh>(null);
+// 🔷 Neural Sphere Component
+function NeuralModel() {
+  const meshRef = useRef<Mesh>(null);
 
   useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.x += 0.005;
-      ref.current.rotation.y += 0.01;
+    if (meshRef.current) {
+      meshRef.current.rotation.y += 0.005;
     }
   });
 
   return (
-    <mesh ref={ref} position={[0, 0, 0]}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color="#00ffff" roughness={0.5} metalness={0.7} />
+    <mesh ref={meshRef} position={[0, 0, 0]}>
+      <Sphere visible args={[1, 100, 200]} scale={2}>
+        <MeshDistortMaterial
+          color="#00ffff"
+          attach="material"
+          distort={0.5}
+          speed={2}
+          roughness={0}
+        />
+      </Sphere>
+
+      <Html distanceFactor={10}>
+        <div style={{ color: 'white', textAlign: 'center', cursor: 'pointer' }}>
+          ⚡ Protocol 2145 ⚡
+          <br />
+          <small>Click to explore</small>
+        </div>
+      </Html>
     </mesh>
   );
 }
@@ -61,19 +75,12 @@ export default function SceneCanvas() {
 
       <Suspense fallback={null}>
         <SceneBackground />
-        <Stars
-          radius={100}
-          depth={50}
-          count={2000}
-          factor={4}
-          saturation={0}
-          fade
-        />
-        <RotatingCube />
+        <Stars radius={100} depth={50} count={2000} factor={4} saturation={0} fade />
+        <NeuralModel />
         <Environment preset="sunset" />
       </Suspense>
 
-      <OrbitControls enableZoom={false} enablePan={false} />
+      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={1} />
     </Canvas>
   );
 }

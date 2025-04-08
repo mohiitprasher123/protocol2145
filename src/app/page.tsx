@@ -11,11 +11,12 @@ export default function Home() {
           textAlign: 'center',
           paddingTop: '5vh',
           color: 'white',
+          pointerEvents: 'none',
         }}
       >
         <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>⚡ Protocol 2145 ⚡</h1>
         <p style={{ fontSize: '1.1rem' }}>
-          A 5-part epic reawakening the future of human–AI symbiosis.
+          An AI Awakening.
         </p>
       </div>
     </>
