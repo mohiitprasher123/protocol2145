@@ -11,7 +11,7 @@ import {
   Color,
   Mesh,
 } from 'three';
-
+// explicitly trigger git detection
 // 🔷 Neural Sphere Component
 function NeuralModel() {
   const meshRef = useRef<Mesh>(null);
