@@ -1,4 +1,5 @@
 'use client';
+
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, Float } from '@react-three/drei';
 import ParticlesBackground from './ParticlesBackground';
@@ -12,14 +13,15 @@ export default function SceneCanvas() {
       <Environment preset="city" />
       <ambientLight intensity={0.5} />
       <directionalLight intensity={1.2} position={[5, 10, 5]} />
-      <group position={[0, -0.5, 0]}>
-        <Float speed={2} rotationIntensity={0.8} floatIntensity={1}>
-          <FuturisticSphere />
-        </Float>
-        <Float speed={1.5} rotationIntensity={0.6}>
-          <DNAHelix />
-        </Float>
-      </group>
+
+      <Float speed={2} rotationIntensity={0.8} floatIntensity={1.5}>
+        <FuturisticSphere />
+      </Float>
+
+      <Float speed={1.5} rotationIntensity={0.6}>
+        <DNAHelix />
+      </Float>
+
       <ParticlesBackground />
     </Canvas>
   );

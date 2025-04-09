@@ -5,6 +5,7 @@ import * as THREE from 'three';
 
 export function DNAHelix() {
   const ref = useRef<THREE.Group>(null);
+
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.y += delta / 4;
@@ -20,11 +21,7 @@ export function DNAHelix() {
       {balls.map((ball, idx) => (
         <mesh key={idx} position={ball.position}>
           <sphereGeometry args={[0.05, 32, 32]} />
-          <meshStandardMaterial 
-            color="#00ffff" 
-            emissive="#00ffff" 
-            emissiveIntensity={0.6} 
-          />
+          <meshStandardMaterial color="#00ffff" emissive="#00ffff" emissiveIntensity={0.6} />
         </mesh>
       ))}
     </group>
