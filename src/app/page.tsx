@@ -1,20 +1,29 @@
-// page.tsx
 'use client';
+
 import SceneCanvas from '@/components/Three/SceneCanvas';
 
 export default function Home() {
   return (
-    <main style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <main className="relative w-full h-screen flex flex-col items-center justify-center">
+      {/* Your 3D Canvas */}
       <SceneCanvas />
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0,
-        width: '100%', height: '100%',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        pointerEvents: 'none', zIndex: 10, color: '#ffffff'
-      }}>
-        <h1 style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>Protocol <span style={{ color: '#00e5ff' }}>2145</span></h1>
-        <p style={{ fontSize: '1.5rem', fontWeight: '300' }}>The Future of AI Begins Here.</p>
+
+      {/* UI Elements (Protocol 2145, buttons, etc.) */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
+        <h1 style={{ fontSize: '4rem', color: '#00e5ff', marginBottom: '1rem', pointerEvents: 'auto' }}>
+          Protocol <span style={{ color: '#fff' }}>2145</span>
+        </h1>
+        <p style={{ fontSize: '1.5rem', color: '#00e5ff', marginBottom: '2rem', pointerEvents: 'auto' }}>
+          The Future of AI Begins Here.
+        </p>
+        <div style={{ display: 'flex', gap: '1rem', pointerEvents: 'auto' }}>
+          <button style={{ padding: '0.5rem 1rem', backgroundColor: '#00e5ff', color: '#000', borderRadius: '8px' }}>
+            Enter
+          </button>
+          <button style={{ padding: '0.5rem 1rem', backgroundColor: '#7dd3fc', color: '#000', borderRadius: '8px' }}>
+            About Us
+          </button>
+        </div>
       </div>
     </main>
   );
