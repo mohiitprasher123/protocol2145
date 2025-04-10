@@ -1,11 +1,9 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    turbo: {
-      loaders: {},
-      rules: {},
-    },
-  },
-};
+    appDir: true
+  }
+}
 
 module.exports = nextConfig;
