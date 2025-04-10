@@ -8,7 +8,7 @@ import { OrbitControls } from '@react-three/drei';
 
 export default function SceneCanvas() {
   return (
-    <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
+    <Canvas style={{ width: '100vw', height: '100vh', position: 'absolute', top: 0, left: 0 }} camera={{ position: [0, 0, 10], fov: 45 }}>
       <Suspense fallback={null}>
         <ambientLight intensity={1.2} />
         <directionalLight position={[0, 10, 5]} intensity={1.5} />
