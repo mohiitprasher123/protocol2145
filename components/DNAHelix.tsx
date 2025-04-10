@@ -1,33 +1,38 @@
-"use client";
-import { useFrame } from "@react-three/fiber";
-import { useRef } from "react";
-import { Mesh, Group } from "three";
+'use client';
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { Group } from 'three';
 
-export default function DNAHelix() {
-  const groupRef = useRef<Group>(null);
+const DNAHelix = () => {
+  const groupRef = useRef<Group>(null); 
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() * 0.2;
+      groupRef.current.rotation.y = clock.getElapsedTime() / 2;
     }
   });
 
-  const particles = Array.from({ length: 100 }, (_, i) => {
-    const angle = i * 0.2;
-    const x = Math.sin(angle) * 1.5;
-    const y = (i - 50) * 0.15;
-    const z = Math.cos(angle) * 1.5;
-    return { position: [x, y, z] };
+  const strands = Array.from({ length: 80 }, (_, i) => {
+    const angle = i * 0.3;
+    const x = Math.sin(angle) * 0.8;
+    const y = (i - 40) * 0.2;
+    const z = Math.cos(angle) * 0.8;
+
+    return (
+      <Sphere key={i} args={[0.1, 32, 32]} position={[x, y, z]}>
+        <MeshDistortMaterial
+          color="#00e5ff"
+          emissive="#00ffff"
+          emissiveIntensity={1}
+          speed={3}
+          distort={0.3}
+        />
+      </Sphere>
+    );
   });
 
-  return (
-    <group ref={groupRef}>
-      {particles.map((particle, idx) => (
-        <mesh key={idx} position={particle.position as [number, number, number]}>
-          <sphereGeometry args={[0.07, 32, 32]} />
-          <meshStandardMaterial emissive="#7ef0ff" emissiveIntensity={0.9} roughness={0.2} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
+  return <group ref={groupRef}>{strands}</group>;
+};
+
+export default DNAHelix;

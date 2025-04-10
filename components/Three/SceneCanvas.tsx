@@ -7,16 +7,13 @@ import { OrbitControls } from '@react-three/drei';
 
 export default function SceneCanvas() {
   return (
-    <Canvas
-      camera={{ position: [0, 0, 10], fov: 45 }}
-      style={{ width: '100vw', height: '100vh', position: 'absolute', top: 0, left: 0 }}
-    >
+    <Canvas camera={{ position: [0, 0, 12], fov: 35 }}>
       <Suspense fallback={null}>
-        <ambientLight intensity={1.2} />
-        <directionalLight position={[0, 10, 5]} intensity={1.5} />
+        <ambientLight intensity={2} />
+        <directionalLight position={[0, 10, 10]} intensity={2.5} />
         <DNAHelix />
         <ParticlesBackground />
-        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.5} />
+        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.8} />
       </Suspense>
     </Canvas>
   );
