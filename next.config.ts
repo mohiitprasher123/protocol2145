@@ -1,12 +1,8 @@
-import type { NextConfig } from "next";
+// next.config.ts
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      loaders: {},
-      resolveAlias: {},
-    },
-  },
+  reactStrictMode: true,
 };
 
 export default nextConfig;

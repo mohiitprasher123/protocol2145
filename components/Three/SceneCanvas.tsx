@@ -1,9 +1,10 @@
-"use client";
-import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
-import DNAHelix from "../DNAHelix";
-import ParticlesBackground from "./ParticlesBackground";
-import { OrbitControls } from "@react-three/drei";
+'use client';
+
+import { Canvas } from '@react-three/fiber';
+import { Suspense } from 'react';
+import DNAHelix from '../DNAHelix';
+import ParticlesBackground from './ParticlesBackground';
+import { OrbitControls } from '@react-three/drei';
 
 export default function SceneCanvas() {
   return (
