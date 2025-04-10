@@ -1,28 +1,20 @@
-'use client';
-
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, Float } from '@react-three/drei';
-import ParticlesBackground from './ParticlesBackground';
-import { FuturisticSphere } from '../FuturisticSphere';
-import { DNAHelix } from '../DNAHelix';
+"use client";
+import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import DNAHelix from "../DNAHelix";
+import ParticlesBackground from "./ParticlesBackground";
+import { OrbitControls } from "@react-three/drei";
 
 export default function SceneCanvas() {
   return (
-    <Canvas camera={{ position: [0, 0, 3] }}>
-      <OrbitControls enableZoom={false} />
-      <Environment preset="city" />
-      <ambientLight intensity={0.5} />
-      <directionalLight intensity={1.2} position={[5, 10, 5]} />
-
-      <Float speed={2} rotationIntensity={0.8} floatIntensity={1.5}>
-        <FuturisticSphere />
-      </Float>
-
-      <Float speed={1.5} rotationIntensity={0.6}>
+    <Canvas camera={{ position: [0, 0, 10], fov: 45 }}>
+      <Suspense fallback={null}>
+        <ambientLight intensity={1.2} />
+        <directionalLight position={[0, 10, 5]} intensity={1.5} />
         <DNAHelix />
-      </Float>
-
-      <ParticlesBackground />
+        <ParticlesBackground />
+        <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1.5} />
+      </Suspense>
     </Canvas>
   );
 }

@@ -1,38 +1,34 @@
-'use client';
-
-import { Points, PointMaterial } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
-import { useRef, useMemo } from 'react';
-import * as random from 'maath/random';
-import * as THREE from 'three';
+"use client";
+import { Points, PointMaterial } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import * as THREE from "three";
 
 export default function ParticlesBackground() {
-  const ref = useRef<THREE.Group>(null);
+  const particlesRef = useRef<THREE.Points>(null);
+  const particles = new Float32Array(4000);
 
-  const particles = useMemo(() => {
-    const positions = new Float32Array(5000 * 3);
-    random.inSphere(positions, { radius: 10 });
-    return positions;
-  }, []);
+  for (let i = 0; i < 4000; i += 3) {
+    particles[i] = (Math.random() - 0.5) * 50;
+    particles[i + 1] = (Math.random() - 0.5) * 50;
+    particles[i + 2] = (Math.random() - 0.5) * 50;
+  }
 
-  useFrame((state, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x -= delta / 20;
-      ref.current.rotation.y -= delta / 25;
+  useFrame(() => {
+    if (particlesRef.current) {
+      particlesRef.current.rotation.y += 0.0005;
     }
   });
 
   return (
-    <group ref={ref}>
-      <Points positions={particles} stride={3} frustumCulled={false}>
-        <PointMaterial
-          transparent
-          color="#ffffff"
-          size={0.02}
-          sizeAttenuation={true}
-          depthWrite={false}
-        />
-      </Points>
-    </group>
+    <Points ref={particlesRef} positions={particles} stride={3} frustumCulled={false}>
+      <PointMaterial
+        transparent
+        color="#ffffff"
+        size={0.03}
+        sizeAttenuation
+        depthWrite={false}
+      />
+    </Points>
   );
 }

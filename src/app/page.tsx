@@ -1,32 +1,35 @@
-'use client';
-import SceneCanvas from '@/components/Three/SceneCanvas';
-import { Exo_2 } from 'next/font/google';
-import Link from 'next/link';
-
-const exo2 = Exo_2({ subsets: ['latin'] });
+"use client";
+import { motion } from "framer-motion";
+import SceneCanvas from "@/components/Three/SceneCanvas";
 
 export default function Home() {
   return (
-    <div style={{ width: '100vw', height: '100vh', backgroundColor: '#000', position: 'relative', overflow: 'hidden' }}>
+    <div className="relative flex min-h-screen flex-col items-center justify-center bg-gradient-to-t from-[#060A1E] to-[#0F172A] overflow-hidden">
       <SceneCanvas />
-      <div style={{ position: 'absolute', top: '8%', width: '100%', textAlign: 'center', color: '#fff', pointerEvents: 'none', zIndex: 10 }}>
-        <h1 className={exo2.className} style={{ fontSize: '3rem', letterSpacing: '4px' }}>
-          ⚡ Protocol <span style={{ color: '#00ffff' }}>2145</span> ⚡
-        </h1>
-        <p style={{ fontSize: '1.2rem', opacity: 0.8 }}>
+      <div className="absolute z-10 flex flex-col items-center justify-center">
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#7ef0ff] to-[#ffffff] drop-shadow-xl"
+        >
+          Protocol 2145
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 2, delay: 0.5 }}
+          className="mt-4 text-center text-lg md:text-xl text-[#7ef0ff]/70"
+        >
           The Future of AI Begins Here.
-        </p>
-        <div style={{ marginTop: '30px', display: 'flex', justifyContent: 'center', gap: '20px', pointerEvents: 'auto' }}>
-          <Link href="/enter">
-            <button style={{ padding: '12px 30px', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.3)', color: '#fff', cursor: 'pointer', fontSize: '1rem', transition: '0.3s' }}>
-              Enter
-            </button>
-          </Link>
-          <Link href="/about">
-            <button style={{ padding: '12px 30px', backdropFilter: 'blur(10px)', backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: '15px', border: '1px solid rgba(255,255,255,0.3)', color: '#00ffff', cursor: 'pointer', fontSize: '1rem', transition: '0.3s' }}>
-              About Us
-            </button>
-          </Link>
+        </motion.p>
+        <div className="mt-8 flex space-x-6">
+          <button className="px-8 py-2 rounded-xl font-semibold text-[#0F172A] bg-[#7ef0ff] hover:bg-white shadow-xl transition duration-300">
+            Enter
+          </button>
+          <button className="px-8 py-2 rounded-xl font-semibold text-[#7ef0ff] border border-[#7ef0ff] hover:bg-[#7ef0ff] hover:text-[#0F172A] shadow-xl transition duration-300">
+            About Us
+          </button>
         </div>
       </div>
     </div>
