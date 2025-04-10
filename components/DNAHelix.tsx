@@ -5,19 +5,19 @@ import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import { Group } from 'three';
 
 const DNAHelix = () => {
-  const groupRef = useRef<Group>(null); 
+  const groupRef = useRef<Group>(null!);
 
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = clock.getElapsedTime() / 2;
+      groupRef.current.rotation.y += 0.01;
     }
   });
 
   const strands = Array.from({ length: 80 }, (_, i) => {
-    const angle = i * 0.3;
-    const x = Math.sin(angle) * 0.8;
-    const y = (i - 40) * 0.2;
-    const z = Math.cos(angle) * 0.8;
+    const angle = i * 0.2;
+    const x = Math.sin(angle) * 2;
+    const y = (i - 40) * 0.1;
+    const z = Math.cos(angle) * 2;
 
     return (
       <Sphere key={i} args={[0.1, 32, 32]} position={[x, y, z]}>
