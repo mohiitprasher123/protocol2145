@@ -1,6 +1,7 @@
 'use client';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import './signal.css';
 
 const textLines = [
   "From the echoes of 2145,",
