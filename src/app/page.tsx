@@ -1,6 +1,5 @@
 'use client';
-import SceneCanvas from '@/components/Three/SceneCanvas';
-
+ import SceneCanvas from '../../components/Three/SceneCanvas'
 export default function Home() {
   return (
     <main className="relative w-full h-screen overflow-hidden">
