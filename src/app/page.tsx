@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+
 import { useRouter } from 'next/navigation';
 import SceneCanvas from '../../components/Three/SceneCanvas';
 
@@ -10,23 +10,10 @@ export default function Home() {
     <main className="relative w-full h-screen overflow-hidden">
       {/* Overlay UI */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none z-10">
-        <h1
-          style={{
-            color: '#FFFFFF',
-            fontSize: '3rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-          }}
-        >
+        <h1 style={{ color: '#FFFFFF', fontSize: '3rem', fontWeight: 'bold', marginBottom: '1rem' }}>
           Protocol 2145
         </h1>
-        <p
-          style={{
-            color: '#CCCCCC',
-            fontSize: '1.2rem',
-            marginBottom: '2rem',
-          }}
-        >
+        <p style={{ color: '#CCCCCC', fontSize: '1.2rem', marginBottom: '2rem' }}>
           The memory has begun.
         </p>
         <div style={{ display: 'flex', gap: '1rem', pointerEvents: 'auto' }}>
@@ -57,7 +44,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* 3D scene */}
+      {/* 3D canvas behind */}
       <SceneCanvas />
     </main>
   );
